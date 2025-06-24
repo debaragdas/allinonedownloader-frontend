@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All In One Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial; padding: 20px; text-align: center; background: #f2f2f2; }
+    input, button { padding: 10px; width: 80%; font-size: 16px; margin: 10px 0; }
+    button { background: #007bff; color: white; border: none; cursor: pointer; }
+    #result { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>🎥 All In One Downloader</h2>
+  <p>Paste YouTube / Instagram / Facebook Video Link:</p>
+  <form id="downloadForm">
+    <input type="text" id="videoUrl" placeholder="Paste link here..." required />
+    <br>
+    <button type="submit">Get Download Link</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('downloadForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const url = document.getElementById('videoUrl').value;
+      document.getElementById('result').innerHTML = '⏳ Processing...';
+
+      const response = await fetch('https://your-backend-url.up.railway.app/api/download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        document.getElementById('result').innerHTML = `❌ Error: ${data.error}`;
+      } else {
+        document.getElementById('result').innerHTML = `
+          <h3>✅ Download:</h3>
+          <a href="${data.sd}" target="_blank">Download SD</a><br><br>
+          <a href="${data.hd}" target="_blank">Download HD</a>
+        `;
+      }
+    };
+  </script>
+</body>
+</html>
