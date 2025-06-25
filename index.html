@@ -27,7 +27,7 @@
       const url = document.getElementById('videoUrl').value;
       document.getElementById('result').innerHTML = '⏳ Processing...';
 
-      const response = await fetch('https://allinonedownloader-backend.repl.co/api/download', {
+      const response = await fetch('https://allinonedownloader.fly.dev/api/download', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url })
